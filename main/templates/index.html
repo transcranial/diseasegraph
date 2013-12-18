@@ -57,6 +57,18 @@
             });
         });
         </script>
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-8476644-3', 'pythonanywhere.com');
+            ga('send', 'pageview');
+
+        </script>
+
 	</head>
 <body>
 <div id="wrapper">
@@ -78,7 +90,7 @@
 				<option value="25">25</option>
 				<option value="50">50</option>
 				</select>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="submit" value="GRAPH" onclick="document.getElementById('working_indicator').style.visibility='visible';">
+				<input type="submit" value="GRAPH" id="graph_button">
 			</form>
 			<script>
 				var metric = '{{ method }}', metric_select = document.getElementById('metric_select');
@@ -101,9 +113,19 @@
 
 	<section id="middle">
 	            {% if graph %}
-                <div id="working_indicator" style="visibility:visible;position:absolute;">Processing . . .<br><img src="{{ STATIC_URL }}images/ajax-loader.gif"></div>
+                <div id="working_indicator" style="visibility:visible;position:absolute;"><!--Processing . . .<br><img src="{{ STATIC_URL }}images/ajax-loader.gif">-->
+                    <div class="spinner">
+                      <div class="dot1"></div>
+                      <div class="dot2"></div>
+                    </div>
+                </div>
 	            {% else %}
-                <div id="working_indicator" style="visibility:hidden;position:absolute;">Processing . . .<br><img src="{{ STATIC_URL }}images/ajax-loader.gif"></div>
+                <div id="working_indicator" style="visibility:hidden;position:absolute;"><!--Processing . . .<br><img src="{{ STATIC_URL }}images/ajax-loader.gif">-->
+                    <div class="spinner">
+                      <div class="dot1"></div>
+                      <div class="dot2"></div>
+                    </div>
+                </div>
                 {% endif %}
 
 		<div id="container">
@@ -129,7 +151,7 @@
 
 	<section id="footer">
 		<div id="footer-left">
-			<a href="#about" id="about_link">More Information</a>&nbsp;&nbsp;<a href="#contact" id="contact_link">Contact</a>
+			<a href="#about" id="about_link" onClick="ga('send', 'event', 'more_information', 'click');">More Information</a>&nbsp;&nbsp;<a href="#contact" id="contact_link" onClick="ga('send', 'event', 'contact_form', 'click');">Contact</a>
 		</div>
 		Created by L. Leon Chen &copy; 2013&nbsp;&nbsp;&nbsp;
 	</section>
@@ -179,6 +201,15 @@ $(document).ready(function() {
             $('#working_indicator').css('visibility', 'hidden');
             graphWithPeripheralLinks(data, termFromTemplate, methodFromTemplate, nodesFromTemplate);
         });
+
+    $('#graph_button').click(function() {
+        var term = $('#navigation_autocomplete').val();
+        var method = $('#metric_select').val();
+        var nodes = $('#nodenum_select').val();
+        $('#content').html('');
+        document.getElementById('working_indicator').style.visibility='visible';
+        ga('send', 'event', 'graph_button', 'click', {'term': term, 'method': method, 'nodes': nodes});
+    });
 });
 </script>
 {% endautoescape %}
