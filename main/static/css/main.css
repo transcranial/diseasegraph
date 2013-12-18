@@ -1,0 +1,225 @@
+header, nav, section, article, aside, footer {
+	display: block;
+}
+body {
+	font-family: dosis, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+	padding: 0;
+    min-width: 1024px;
+}
+a {
+	color: #FFFFFF;
+	outline: none;
+	text-decoration: underline;
+}
+a:hover {
+	text-decoration: none;
+}
+p {
+	margin: 0 0 18px
+}
+img {
+	border: none;
+}
+input, select {
+	vertical-align: middle;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	background: #FFFFFF;
+	outline: none;
+	border: none;
+}
+input[type="submit"] {
+    background: #5EBCD5;
+    color: #fff;
+	font-size: 14px;
+    padding: 6px 11px;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-transition: 0.25s linear;
+    transition: 0.25s linear;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background: #96CEDD;
+}
+input[type="submit"]:active {
+    background: #6D7F8B;
+}
+#wrapper {
+	margin: 0 auto;
+	width: 100%;
+}
+
+
+#about_link, #contact_link {
+  color: #ffffff;
+  background-color: #5FBE64;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  padding: 10px;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-transition: 0.25s linear;
+  transition: 0.25s linear;
+}#about_link:hover, #contact_link:hover {
+  color: #ffffff;
+  background-color: #7BCC7F;
+  border-color: #7BCC7F;
+  border: none;
+  color: #ffffff;
+}#about_link:active, #contact_link:active {
+  color: #ccc;
+  background: #6D7F8B;
+  border: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/* Header
+-----------------------------------------------------------------------------*/
+#header {
+	height: 80px;
+	background: #6D7F8B url(../images/headerbg.jpg);
+	color: #FFFFFF;
+}
+#header-left {
+	float: left;
+	margin-left: 20px;
+	font: normal 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#header-title {
+	font: normal 24px great-primer-small-caps, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	padding: 5px 0 0 0;
+}
+
+
+/* Middle
+-----------------------------------------------------------------------------*/
+#middle {
+	width: 100%;
+	height: window.innerHeight;
+	position: relative;
+	background: #FFFFFF;
+}
+#middle:after {
+	content: '';
+	clear: both;
+	display: table;
+}
+#container {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+}
+#content {
+	padding: 0 20% 0 15%;
+	font-size: 16px;
+}
+
+
+/* Sidebar Left
+-----------------------------------------------------------------------------*/
+#sideLeft {
+	float: left;
+	width: 15%;
+	height: window.innerHeight;
+	margin-left: -100%;
+	position: relative;
+	font-size: 16px;
+	padding: 30px 0 0 30px;
+}
+#key {
+	font-size: 12px;
+}
+
+
+/* Sidebar Right
+-----------------------------------------------------------------------------*/
+#sideRight {
+	float: left;
+	margin-right: 0;
+	width: 20%;
+	height: 700px;
+	margin-left: -20%;
+	position: relative;
+	font-size: 16px;
+	padding: 50px 0 0 0;
+}
+
+
+/* Footer
+-----------------------------------------------------------------------------*/
+#footer {
+	position: fixed;
+	bottom: 0;
+	height: 50px;
+	width: 100%;
+	background: #fff;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	color: #888;
+	text-align: right;
+    line-height: 50px;
+}
+#footer-left {
+	float: left;
+	margin-left: 10px;
+	text-align: left;
+	width: 25%;
+	font: normal 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	line-height: 50px;
+}
+
+.popup {
+    font: normal 1em Helvetica, Arial, Verdana, sans-serif;
+    border: 2px solid #6D7F8B;
+	color: #000000;
+	width: 275px;
+	padding: 10px;
+	background: #FFFFFF;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	display: none;
+}
+.popup .b-close {
+	background-color: #6D7F8B;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	width: 28px;
+	height: 28px;
+	color: #FFFFFF;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	box-shadow: none;
+	font: bold 20px sans-serif;
+	position:absolute;
+	right:-14px;top:-14px
+}
+.popup .b-close:hover {
+	background-color: #FFFFFF;
+    color: #6D7F8B;
+}
+#about_popup {
+}
+#contact_popup {
+}
+#contact_popup input[type='text'], #contact_popup textarea {
+    width: 255px;
+	padding: 2px 8px;
+	border: 1px solid #6D7F8B;
+	margin: 0 0 10px 0;
+    vertical-align: middle;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    font: normal 1em "Courier New";
+	background: #FFFFFF;
+}
+#contact_popup textarea {
+	resize: none;
+}
