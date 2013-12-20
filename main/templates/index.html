@@ -2,10 +2,11 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>DiseaseLink: Disease Similarity Graph Explorer</title>
+		<title>DiseaseGraph: explore relationships between diseases</title>
 		<script src="//use.edgefonts.net/great-primer-small-caps.js"></script>
 		<script src="//use.edgefonts.net/dosis.js"></script>
 		<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/main.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.mCustomScrollbar.css" />
         <script type="text/javascript">
             if(!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1")) {
                 alert('The browser you are using is not supported. Please upgrade or use another browser. Chrome or Firefox is recommended.');
@@ -16,6 +17,7 @@
 		<script src="{{ STATIC_URL }}js/d3.v3.min.js" type="text/javascript"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js" type="text/javascript"></script>
 		<script src="{{ STATIC_URL }}js/json2.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}js/jquery.mCustomScrollbar.concat.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.bpopup.min.js"></script>
 		<script src="{{ STATIC_URL }}js/graphWithPeripheralLinks.js"></script>
         {% include 'autocomplete_light/static.html' %}
@@ -73,9 +75,9 @@
 <body>
 <div id="wrapper">
 
-	<section id="header">
+	<div id="header">
 		<div id="header-left">
-			<div id="header-title"><b>DiseaseLink: disease graph explorer</b></div>
+			<div id="header-title"><b>DiseaseGraph</b>: explore relationships between diseases</div>
 			<form id="inputform" action="graph.do" method="get">
 				Search:&nbsp;&nbsp;<input type="text" name="q" id="navigation_autocomplete" style="width: 200px;" value="{{ term }}" />&nbsp;&nbsp;&nbsp;&nbsp;
 				Metric:&nbsp;&nbsp;<select name="metric" id="metric_select">
@@ -109,9 +111,9 @@
 				}
 			</script>
 		</div>
-	</section>
+	</div>
 
-	<section id="middle">
+	<div id="middle">
 	            {% if graph %}
                 <div id="working_indicator" style="visibility:visible;position:absolute;"><!--Processing . . .<br><img src="{{ STATIC_URL }}images/ajax-loader.gif">-->
                     <div class="spinner">
@@ -132,22 +134,30 @@
 			<div id="content"></div>
 		</div>
 
-		<aside id="sideLeft">
-			{{ keylabel }}<br><br>
-			<div id="key"></div>
-		</aside>
+		<div id="sideLeft">
+		    <div id="sideLeft-top" style="visibility:hidden;">
+    			{{ keylabel }}<br><br>
+    			<div id="key"></div>
+			</div>
+		    <div id="sideLeft-bottom">
+			</div>
+		</div>
 
-		<aside id="sideRight">
-			Details: <br><br>
-			<span id="linkInfo-source">(hover over link)</span>
-			<span id="linkInfo-source-num"></span><br>
-			<span id="linkInfo-target"></span>
-			<span id="linkInfo-target-num"></span><br>
-			<span id="linkInfo-coeff"></span>
-			<span id="linkInfo-coeff-num"></span><br><br>
-		</aside>
+		<div id="sideRight">
+		    <div id="sideRight-top">
+    			<span id="linkInfo-source"></span>
+    			<span id="linkInfo-source-num"></span><br>
+    			<span id="linkInfo-target"></span>
+    			<span id="linkInfo-target-num"></span><br>
+    			<span id="linkInfo-coeff"></span>
+    			<span id="linkInfo-coeff-num"></span><br><br>
+			</div>
+		    <div id="sideRight-bottom">
+			</div>
+		</div>
+		</div>
 
-	</section>
+	</div>
 
 	<section id="footer">
 		<div id="footer-left">
@@ -184,10 +194,70 @@
     </form>
 </div>
 
+<script>
+$(document).ready(function() {
+    
+    
+});
+</script>
+
 {% if graph %}
 {% autoescape off %}
 <script>
 $(document).ready(function() {
+    var w = 0.64 * window.innerWidth;
+    var h = window.innerHeight - 80 - 50;
+    $('#content').width(w);
+    $('#content').height(h);
+    $('#sideRight-bottom').height($('#container').outerHeight() - $('#sideRight-top').outerHeight() - 20);
+        
+    //An approch to getting the summary / leading paragraphs / section 0 out of Wikipedia articlies within the browser using JSONP with the Wikipedia API: http://en.wikipedia.org/w/api.php
+    var title = "{{ term }}";
+    title = title.toLowerCase().replace(' ', '_');
+    //Get Leading paragraphs (section 0)
+    $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&page=" + title + "&prop=text&section=0&format=json&callback=?&redirects", function (data) {
+        for (text in data.parse.text) {
+            var text = data.parse.text[text].split("<p>");
+            var pText = "<i>From Wikipedia:</i><br><br>";
+            for (p in text) {
+                //Remove html comment
+                text[p] = text[p].split("<!--");
+                if (text[p].length > 1) {
+                    text[p][0] = text[p][0].split(/\r\n|\r|\n/);
+                    text[p][0] = text[p][0][0];
+                    if (text[p][0].indexOf("</p>") != text[p][0].length - 4) {
+                        text[p][0] += "</p> ";
+                    } else {
+                        text[p][0] += " "
+                    }
+                }
+                text[p] = text[p][0];
+                //Construct a string from paragraphs
+                if (text[p].indexOf("</p>") == text[p].length - 5) {
+                    var htmlStrip = text[p].replace(/<(?:.|\n)*?>/gm, '') //Remove HTML
+                    var splitNewline = htmlStrip.split(/\r\n|\r|\n/); //Split on newlines
+                    for (newline in splitNewline) {
+                        if (splitNewline[newline].substring(0, 11) != "Cite error:") {
+                            pText += splitNewline[newline];
+                            pText += "<br>";
+                        }
+                    }
+                }
+            }
+            pText = pText.substring(0, pText.length - 4); //Remove extra newline
+            pText = pText.replace(/\[\d+\]/g, ""); //Remove reference tags (e.x. [1], [4], etc)
+            pText += "<br><a href='http://en.wikipedia.org/wiki/" + title + "'>Go to Wikipedia to learn more.</a>";
+            document.getElementById('sideRight-bottom').innerHTML = pText;
+        }
+        $('#sideRight-bottom')
+            .mCustomScrollbar({
+                theme: 'custom-dark-thick',
+                scrollButtons: {
+                    enable: true
+                }
+            });
+    });
+    
     var termFromTemplate = '{{ term }}';
     var methodFromTemplate = '{{ method }}';
     var nodesFromTemplate = '{{ nodes }}';
@@ -198,8 +268,10 @@ $(document).ready(function() {
             nodes: nodesFromTemplate
         },
         function(data) {
+            $('#sideLeft-top').css('visibility', 'visible');
             $('#working_indicator').css('visibility', 'hidden');
-            graphWithPeripheralLinks(data, termFromTemplate, methodFromTemplate, nodesFromTemplate);
+            graphWithPeripheralLinks(w, h, data, termFromTemplate, methodFromTemplate, nodesFromTemplate);
+            $('#sideLeft-bottom').height($('#container').outerHeight() - $('#sideLeft-top').outerHeight());
         });
 
     $('#graph_button').click(function() {
@@ -210,6 +282,7 @@ $(document).ready(function() {
         document.getElementById('working_indicator').style.visibility='visible';
         ga('send', 'event', 'graph_button', 'click', {'term': term, 'method': method, 'nodes': nodes});
     });
+    
 });
 </script>
 {% endautoescape %}

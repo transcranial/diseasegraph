@@ -8,7 +8,7 @@ body {
     min-width: 1024px;
 }
 a {
-	color: #FFFFFF;
+	color: #5EBCD5;
 	outline: none;
 	text-decoration: underline;
 }
@@ -98,7 +98,6 @@ input[type="submit"]:active {
 -----------------------------------------------------------------------------*/
 #middle {
 	width: 100%;
-	height: window.innerHeight;
 	position: relative;
 	background: #FFFFFF;
 }
@@ -123,14 +122,18 @@ input[type="submit"]:active {
 #sideLeft {
 	float: left;
 	width: 15%;
-	height: window.innerHeight;
 	margin-left: -100%;
 	position: relative;
 	font-size: 16px;
-	padding: 30px 0 0 30px;
 }
 #key {
 	font-size: 12px;
+}
+#sideLeft-top {
+	padding: 30px 0 0 20px;
+}
+#sideLeft-bottom {
+
 }
 
 
@@ -143,8 +146,16 @@ input[type="submit"]:active {
 	height: 700px;
 	margin-left: -20%;
 	position: relative;
-	font-size: 16px;
-	padding: 50px 0 0 0;
+}
+#sideRight-top {
+	padding: 30px 10px;
+	font-size: 14px;
+	height: 100px;
+}
+#sideRight-bottom {
+    font: normal 0.9em georgia, serif;
+	padding: 10px;
+	overflow: auto;
 }
 
 

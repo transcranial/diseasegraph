@@ -1,8 +1,6 @@
-function graphWithPeripheralLinks(jsondatavar, term, method, nodes) {
+function graphWithPeripheralLinks(width, height, jsondatavar, term, method, nodes) {
 
-var width = 0.64 * window.innerWidth,
-    height = window.innerHeight - 80 - 50,
-    format = d3.format(",d"),
+var format = d3.format(",d"),
     color = d3.scale.category20();
 
 var svg = d3
@@ -15,7 +13,7 @@ var svg_key = d3
 	.select("#key")
 	.append("svg")
     .attr("width", d3.select("#sideLeft").style("width"))
-    .attr("height", height);
+    .attr("height", height/2);
 
 var force = d3.layout.force()
     .gravity(0.5)
@@ -87,23 +85,23 @@ json = jsondatavar;
         .on("mouseout", function(d) {d3.select(this).attr("stroke", "#C2C6D1"); mouseoutLink(d);});
 
 	function mouseoverLink(d) {
-		d3.select("#linkInfo-source").text(d.source.name + ": ");
-		d3.select("#linkInfo-source-num").text(d.source.size);
-		d3.select("#linkInfo-target").text(d.target.name + ": ");
-		d3.select("#linkInfo-target-num").text(d.target.size);
-		d3.select("#linkInfo-coeff").text("Association strength:");
-		d3.select("#linkInfo-coeff-num").text(d.coefficient);
+		d3.select("#linkInfo-source").html("Frequency:<br>" + d.source.name + ": ");
+		d3.select("#linkInfo-source-num").html(d.source.size);
+		d3.select("#linkInfo-target").html(d.target.name + ": ");
+		d3.select("#linkInfo-target-num").html(d.target.size);
+		d3.select("#linkInfo-coeff").html("<br>Association strength:");
+		d3.select("#linkInfo-coeff-num").html(d.coefficient.toFixed(5));
 	}
 
 	function mouseoutLink(d) {
-		d3.select("#linkInfo-source").text("(hover over link)");
-		d3.select("#linkInfo-source-num").text("");
-		d3.select("#linkInfo-target").text("");
-		d3.select("#linkInfo-target-num").text("");
-		d3.select("#linkInfo-value").text("");
-		d3.select("#linkInfo-value-num").text("");
-		d3.select("#linkInfo-coeff").text("");
-		d3.select("#linkInfo-coeff-num").text("");
+		d3.select("#linkInfo-source").html("");
+		d3.select("#linkInfo-source-num").html("");
+		d3.select("#linkInfo-target").html("");
+		d3.select("#linkInfo-target-num").html("");
+		d3.select("#linkInfo-value").html("");
+		d3.select("#linkInfo-value-num").html("");
+		d3.select("#linkInfo-coeff").html("");
+		d3.select("#linkInfo-coeff-num").html("");
 	}
 
 	var node = svg.selectAll(".node")
@@ -122,6 +120,7 @@ json = jsondatavar;
 
     function clickNode(text) {
         window.location.href = '/graph.do?q=' + text + '&metric=' + method + '&nodenum=' + nodes;
+        ga('send', 'event', 'graph', 'node_click', term);
     }
 
 	function generateArcPath() {
