@@ -237,7 +237,7 @@ $(document).ready(function() {
                     var htmlStrip = text[p].replace(/<(?:.|\n)*?>/gm, '') //Remove HTML
                     var splitNewline = htmlStrip.split(/\r\n|\r|\n/); //Split on newlines
                     for (newline in splitNewline) {
-                        if (splitNewline[newline].substring(0, 11) != "Cite error:") {
+                        if ((splitNewline[newline]).substring(0, 11) != "Cite error:") {
                             pText += splitNewline[newline];
                             pText += "<br>";
                         }
@@ -267,12 +267,13 @@ $(document).ready(function() {
             method: methodFromTemplate,
             nodes: nodesFromTemplate
         },
-        function(data) {
+        function(submatrix_data) {
             $('#sideLeft-top').css('visibility', 'visible');
             $('#working_indicator').css('visibility', 'hidden');
-            graphWithPeripheralLinks(w, h, data, termFromTemplate, methodFromTemplate, nodesFromTemplate);
+            graphWithPeripheralLinks(w, h, submatrix_data, termFromTemplate, methodFromTemplate, nodesFromTemplate);
             $('#sideLeft-bottom').height($('#container').outerHeight() - $('#sideLeft-top').outerHeight());
-        });
+        }
+    );
 
     $('#graph_button').click(function() {
         var term = $('#navigation_autocomplete').val();

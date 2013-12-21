@@ -20,7 +20,7 @@ var force = d3.layout.force()
     .charge(-6000)
     .size([width, height]);
 
-Array.prototype.contains = function(obj) {
+/*Array.prototype.contains = function(obj) {
 	var i = this.length;
 	while (i--) {
 		if (this[i] === obj) {
@@ -28,7 +28,7 @@ Array.prototype.contains = function(obj) {
 		}
 	}
 	return false;
-};
+}*/
 
 // d3.json(jsondatafile, function(json) {
 
@@ -43,7 +43,7 @@ json = jsondatavar;
 		sizes[i] = json.nodes[i].size;
 		if (json.nodes[i].group[0].groupnum !== 0) {
 			for (var j=0;j<json.nodes[i].group.length;j++) {
-				if (!groups.contains(json.nodes[i].group[j].groupnum)) {
+				if ($.inArray(json.nodes[i].group[j].groupnum, groups) == -1) {
 					groups.push(json.nodes[i].group[j].groupnum);
 					svg_key.append("circle").attr("cx",20).attr("cy",cy).attr("r",6).attr("fill",color(groups.indexOf(json.nodes[i].group[j].groupnum)));
 					svg_key.append("text").attr("x",30).attr("y",cy).attr("dy", ".3em").text(json.nodes[i].group[j].groupname);
