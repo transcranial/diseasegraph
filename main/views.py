@@ -1,14 +1,9 @@
 import os
-import numpy
-import itertools
-import re
-import simplejson as json
+import pickle
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Q
-from django.core.mail import send_mail
-from models import Disease
-from termDict import termIndices # dictionary for index of disease terms
+from models import Disease, SubmatrixData
 
 def navigation_autocomplete(request,
     template_name='autocomplete.html'):
@@ -27,6 +22,11 @@ def navigation_autocomplete(request,
     return render(request, template_name, context)
 
 def createJSON(term, method, nodes):
+    import numpy
+    import itertools
+    import re
+    from termDict import termIndices # dictionary for index of disease terms
+
     # Find index of searched term
     termIndex = termIndices[term]
 
@@ -132,13 +132,32 @@ def createJSON(term, method, nodes):
     data = {"nodes": nodes_array, "links": links_array}
     return data
 
+def getJSON(term, method, nodes):
+    try:
+        submatrixObj = SubmatrixData.objects.get(term=term, method=method, nodes=nodes)
+        dataFile = open(submatrixObj.dataFilePath, 'rb')
+        data = pickle.load(dataFile)
+        dataFile.close()
+    except:
+        data = createJSON(term, method, nodes)
+        import uuid
+        uid_filename = str(uuid.uuid4())
+        dataFilePath = os.path.join(os.path.dirname(__file__), 'submatrices', uid_filename + '.pkl')
+        dataFile = open(dataFilePath, 'wb')
+        pickle.dump(data, dataFile)
+        dataFile.close()
+        newdatafile = SubmatrixData(term=term, method=method, nodes=nodes, dataFilePath=dataFilePath)
+        newdatafile.save()
+    return data
+
 def getJSONData(request):
+    import simplejson as json
     if request.is_ajax():
         try:
             term = request.GET['term']
             method = request.GET['method']
             nodes = int(request.GET['nodes'])
-            data = createJSON(term, method, nodes)
+            data = getJSON(term, method, nodes)
         except Exception as e:
             print e
     else:
@@ -174,6 +193,8 @@ def index(request):
     return render(request, 'index.html', template_values)
 
 def contact(request):
+    from django.core.mail import send_mail
+
     name = request.POST.get('f_name', None)
     email = request.POST.get('f_email', None)
     msg = request.POST.get('f_message', None)

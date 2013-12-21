@@ -176,13 +176,13 @@
     <p>In the database are 4,672 diseases or disorders. These are categorized into 27 broad categories, and a disease may fall into one or more of these categories.</p>
     <p>Over 11 million PubMed abstracts were analyzed. The size of the nodes represent how often a disease is mentioned in the literature. Two metrics are used here to calculate the strength of association between two diseases. The first is co-occurrence probability (i.e., given disease X is a topic in an article, what is the conditional probability that disease Y will also be a topic in the same article). The second metric used is the cosine of the co-occurrence probability vectors (in other words, what is the similarity of the co-occurrence <em>links</em> of two diseases).</p>
     <p>This method seeks to capture high-level abstract relationships, with no delineation of the type of relationship. The association link between two diseases may be based on similar presentations, similar pathologic process, similar affected anatomic locations, or any number of relationship types. Two linked diseases may be even causal, but there is no inference of causality or temporality in the graph itself.</p>
-    <p>This is not specifically a differential diagnosis tool, nor is it a tool to search for possible comorbidities. I hope you find it interesting and useful. Feedback is always appreciated (click on the Contact button)!</p>
+    <p>This is not specifically a differential diagnosis tool, nor is it a tool to search for possible comorbidities. I hope you find it interesting and useful. Feedback is always appreciated!</p>
     <!--<p>L. Leon Chen, M.D.<br>Harvard Medical School<br>2013</p>-->
 </div>
 
 <div id="contact_popup" class="popup">
     <span class="b-close"><span>x</span></span>
-    <center><h2>Contact Me</h2></center>
+    <center><h2>Feedback</h2></center>
     <form method="post" id="contact_form">
         Name (optional)<br>
     	<input type="text" name="f_name"><br>
@@ -246,7 +246,7 @@ $(document).ready(function() {
             }
             pText = pText.substring(0, pText.length - 4); //Remove extra newline
             pText = pText.replace(/\[\d+\]/g, ""); //Remove reference tags (e.x. [1], [4], etc)
-            pText += "<br><br><a href='http://en.wikipedia.org/wiki/" + title + "'>Go to Wikipedia to learn more.</a>";
+            pText += "<br><br><a href='http://en.wikipedia.org/wiki/" + title + "' target='_blank'>Go to Wikipedia to learn more.</a>";
             document.getElementById('sideRight-bottom').innerHTML = pText;
         }
         $('#sideRight-bottom')
