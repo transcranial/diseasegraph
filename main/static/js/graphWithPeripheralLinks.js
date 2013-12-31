@@ -17,7 +17,7 @@ var svg_key = d3
 
 var force = d3.layout.force()
     .gravity(0.5)
-    .charge(-6000)
+    .charge(-5000)
     .size([width, height]);
 
 /*Array.prototype.contains = function(obj) {

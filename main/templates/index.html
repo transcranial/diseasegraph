@@ -80,10 +80,6 @@
 			<div id="header-title"><b>DiseaseGraph</b>: explore relationships between diseases</div>
 			<form id="inputform" action="graph.do" method="get">
 				Search:&nbsp;&nbsp;<input type="text" name="q" id="navigation_autocomplete" style="width: 200px;" value="{{ term }}" />&nbsp;&nbsp;&nbsp;&nbsp;
-				Metric:&nbsp;&nbsp;<select name="metric" id="metric_select">
-				<option value="cooccurrence">Co-occurrence Conditional Probability</option>
-				<option value="similarity">Cosine of Co-occurrence Vectors</option>
-				</select>&nbsp;&nbsp;&nbsp;&nbsp;
 				# of Nodes:&nbsp;&nbsp;<select name="nodenum" id="nodenum_select">
 				<option value="5">5</option>
 				<option value="10">10</option>
@@ -92,7 +88,11 @@
 				<option value="25">25</option>
 				<option value="50">50</option>
 				</select>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="submit" value="GRAPH" id="graph_button">
+				<!--Metric:&nbsp;&nbsp;--><select name="metric" id="metric_select" style="display:none;">
+				<option value="cooccurrence">Co-occurrence Conditional Probability</option>
+				<option value="similarity">Cosine of Co-occurrence Vectors</option>
+				</select><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
+				<input type="submit" value="GRAPH" id="graph_button">&nbsp;&nbsp;<input type="button" value="RANDOM" id="random_link" onClick="location.href='/';">
 			</form>
 			<script>
 				var metric = '{{ method }}', metric_select = document.getElementById('metric_select');
@@ -140,8 +140,8 @@
     			<div id="key"></div>
 			</div>
 		    <div id="sideLeft-bottom">
-		        <a href="http://www.filopod.com"><img src="{{ STATIC_URL }}images/logo-full.png"></a><br><br>
-		        Learn better.<br>Learn more.<br><br>Extract the most relevant snippets on a topic extracted from thousands of high quality full-text articles.<br><br><a href="http://www.filopod.com">Click here to explore</a>
+		        Want to explore and learn from the most relevant snippets across thousands of full-text biomedical articles?<br><br>
+		        <a href="http://www.filopod.com"><img src="{{ STATIC_URL }}images/logo-full.png"></a><br><a href="http://www.filopod.com">Click here to explore</a>
 			</div>
 		</div>
 
@@ -156,7 +156,6 @@
 			</div>
 		    <div id="sideRight-bottom">
 			</div>
-		</div>
 		</div>
 
 	</div>

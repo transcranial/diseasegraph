@@ -29,7 +29,7 @@ input, select {
 	outline: none;
 	border: none;
 }
-input[type="submit"] {
+input[type="submit"], #random_link {
     background: #5EBCD5;
     color: #fff;
 	font-size: 14px;
@@ -39,10 +39,10 @@ input[type="submit"] {
     transition: 0.25s linear;
     cursor: pointer;
 }
-input[type="submit"]:hover {
+input[type="submit"]:hover, #random_link:hover {
     background: #96CEDD;
 }
-input[type="submit"]:active {
+input[type="submit"]:active, #random_link:active {
     background: #6D7F8B;
 }
 #wrapper {
@@ -133,9 +133,9 @@ input[type="submit"]:active {
 	padding: 30px 0 0 20px;
 }
 #sideLeft-bottom {
-	font: normal 16px dosis, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font: normal 12px dosis, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	padding: 10px;
-	text-align: center;
+	text-align: left;
 }
 #sideLeft-bottom img {
     width: 80%;
@@ -149,7 +149,6 @@ input[type="submit"]:active {
 	float: left;
 	margin-right: 0;
 	width: 20%;
-	height: 700px;
 	margin-left: -20%;
 	position: relative;
 }

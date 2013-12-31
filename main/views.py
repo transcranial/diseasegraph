@@ -181,7 +181,9 @@ def graph(request):
     return render(request, 'index.html', template_values)
 
 def index(request):
-    term = 'Lupus Erythematosus, Systemic'
+    import random
+    from termDict import termIndices
+    term = random.sample(termIndices.viewkeys(), 1)[0]
     method = 'cooccurrence'
     nodes = 15
     template_values = {
