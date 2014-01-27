@@ -16,7 +16,7 @@ var svg_key = d3
     .attr("height", height/2);
 
 var force = d3.layout.force()
-    .gravity(0.5)
+    .gravity(0.7)
     .charge(-5000)
     .size([width, height]);
 
@@ -36,8 +36,8 @@ var force = d3.layout.force()
 json = jsondatavar;
 
 	// populates key
-	var sizes = new Array();
-	var groups = new Array();
+	var sizes = [];
+	var groups = [];
 	var cy = 10;
 	for (var i=0;i<json.nodes.length;i++) {
 		sizes[i] = json.nodes[i].size;
@@ -56,11 +56,11 @@ json = jsondatavar;
 	var interpNodeSize = d3.interpolateRound(10,75);
 	function calcNodeSize(size) { return interpNodeSize((size-d3.min(sizes))/(d3.max(sizes)-d3.min(sizes))); }
 
-	var coeff = new Array();
-	for (var i=0;i<json.links.length;i++) {
+    var coeff = [];
+    for (i=0; i<json.links.length; i++) {
 		coeff[i] = json.links[i].coefficient;
 	}
-	var interpLinkSize = d3.interpolateRound(0,20);
+	var interpLinkSize = d3.interpolateRound(0,15);
 	function calcLinkSize(coeffInput) { return interpLinkSize((coeffInput-d3.min(coeff))/(d3.max(coeff)-d3.min(coeff))); }
 	var interpLinkDistance = d3.interpolateRound(300,0);
 	function calcLinkDistance(coeffInput) { return interpLinkDistance((coeffInput-d3.min(coeff))/(d3.max(coeff)-d3.min(coeff))); }
@@ -80,7 +80,13 @@ json = jsondatavar;
 		.attr("x2", function(d) { return d.target.x; })
 		.attr("y2", function(d) { return d.target.y; })
 		.attr("stroke", "#C2C6D1")
-		.attr("stroke-width", function(d) { return calcLinkSize(d.coefficient); })
+		.attr("stroke-width", function(d) {
+            linkSize = calcLinkSize(d.coefficient);
+            if (linkSize < 2) {
+                linkSize = 0;
+            }
+            return linkSize;
+        })
 		.on("mouseover", function(d) {d3.select(this).attr("stroke", "#000000"); mouseoverLink(d);})
         .on("mouseout", function(d) {d3.select(this).attr("stroke", "#C2C6D1"); mouseoutLink(d);});
 
@@ -109,12 +115,18 @@ json = jsondatavar;
 	.enter().append("g")
 		.attr("class", "node")
 		.call(force.drag)
-		.on("mouseover", function(d) {d3.select(this).attr("cursor", "pointer"); d3.select(this).attr("stroke", "#000000");})
-		.on("mouseout", function(d) {d3.select(this).attr("cursor", "default"); d3.select(this).attr("stroke", "none");})
+		.on("mouseover", function(d) {
+            d3.select("#linkInfo-source").html("<i>Click to make this the central node.</i>");
+            d3.select(this).attr("cursor", "pointer"); d3.select(this).attr("stroke", "#000000");
+        })
+		.on("mouseout", function(d) {
+            d3.select("#linkInfo-source").html("");
+            d3.select(this).attr("cursor", "default"); d3.select(this).attr("stroke", "none");
+        })
 		.on("click", function(d) {clickNode(d3.select(this).text());});
 
 	svg.selectAll(".node")
-		.filter(function(d,i) { return i==0; })
+		.filter(function(d,i) { return i === 0; })
 		.on("mouseover", function(d) {d3.select(this).attr("cursor", "default"); d3.select(this).attr("stroke", "none");})
 		.on("click", function(d) {return true;});
 
@@ -135,11 +147,11 @@ json = jsondatavar;
 		.data(function(d) { return d.group; })
     .enter().append("path")
 		.attr("d", generateArcPath())
-		.style("fill", function(d) { if(d.groupnum==0) {return "#000000";} else {return color(groups.indexOf(d.groupnum));} })
+		.style("fill", function(d) { if(d.groupnum === 0) {return "#000000";} else {return color(groups.indexOf(d.groupnum));} })
 		.style("opacity", 0.7);
 
     svg.selectAll(".node")
-		.filter(function(d,i) { return i==0; })
+		.filter(function(d,i) { return i === 0; })
 		.append("circle")
 			.attr("r", function(d) { return calcNodeSize(d.size); })
 			.style("stroke", "#000000")
