@@ -82,9 +82,6 @@ json = jsondatavar;
 		.attr("stroke", "#C2C6D1")
 		.attr("stroke-width", function(d) {
             linkSize = calcLinkSize(d.coefficient);
-            if (linkSize < 2) {
-                linkSize = 0;
-            }
             return linkSize;
         })
 		.on("mouseover", function(d) {d3.select(this).attr("stroke", "#000000"); mouseoverLink(d);})

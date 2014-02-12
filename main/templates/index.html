@@ -92,7 +92,7 @@
 				<option value="cooccurrence">Co-occurrence Conditional Probability</option>
 				<option value="similarity">Cosine of Co-occurrence Vectors</option>
 				</select><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
-				<input type="submit" value="GRAPH" id="graph_button">&nbsp;&nbsp;<input type="button" value="RANDOM" id="random_link" onClick="location.href='/';">
+				<input type="submit" value="GRAPH" id="graph_button">&nbsp;&nbsp;<input type="button" value="PICK RANDOM" id="random_link" onClick="location.href='/';">
 			</form>
 			<script>
 				var metric = '{{ method }}', metric_select = document.getElementById('metric_select');
@@ -210,11 +210,8 @@ $(document).ready(function() {
     $('#content').height(h);
     $('#sideRight-bottom').height($('#container').outerHeight() - $('#sideRight-top').outerHeight() - 20);
 
-    //An approch to getting the summary / leading paragraphs / section 0 out of Wikipedia articlies within the browser using JSONP with the Wikipedia API: http://en.wikipedia.org/w/api.php
-    var title = "{{ term }}";
-    title = title.toLowerCase().replace(' ', '_');
-    //Get Leading paragraphs (section 0)
-    $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&page=" + title + "&prop=text&section=0&format=json&callback=?&redirects", function (data) {
+    function parseText(data) {
+        //An approch to getting the summary / leading paragraphs / section 0 out of Wikipedia articlies within the browser using JSONP with the Wikipedia API: http://en.wikipedia.org/w/api.php
         for (text in data.parse.text) {
             var text = data.parse.text[text].split("<p>");
             var pText = "<i>From Wikipedia:</i><br><br>";
@@ -255,6 +252,15 @@ $(document).ready(function() {
                     enable: true
                 }
             });
+    }
+
+    var title = "{{ term }}";
+    title = title.toLowerCase().split(' ').join('_');
+    //Get Leading paragraphs (section 0)
+    $.getJSON("http://en.wikipedia.org/w/api.php?action=parse&page=" + title + "&prop=text&section=0&format=json&callback=?&redirects", function (data) {
+        if (!("error" in data)) {
+            parseText(data);
+        }
     });
 
     var termFromTemplate = '{{ term }}';
