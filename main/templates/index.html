@@ -3,8 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>DiseaseGraph: explore relationships between diseases</title>
-		<script src="//use.edgefonts.net/great-primer-small-caps.js"></script>
-		<script src="//use.edgefonts.net/dosis.js"></script>
+		<link rel="stylesheet" href="//brick.a.ssl.fastly.net/Roboto+Slab:300/EB+Garamond:400,400i">
 		<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/main.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.mCustomScrollbar.css" />
         <script type="text/javascript">
@@ -77,7 +76,7 @@
 
 	<div id="header">
 		<div id="header-left">
-			<div id="header-title"><b>DiseaseGraph</b>: explore relationships between diseases</div>
+			<div id="header-title">DiseaseGraph: explore relationships between diseases</div>
 			<form id="inputform" action="graph.do" method="get">
 				Search:&nbsp;&nbsp;<input type="text" name="q" id="navigation_autocomplete" style="width: 200px;" value="{{ term }}" />&nbsp;&nbsp;&nbsp;&nbsp;
 				# of Nodes:&nbsp;&nbsp;<select name="nodenum" id="nodenum_select">

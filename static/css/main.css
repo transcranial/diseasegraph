@@ -2,7 +2,7 @@ header, nav, section, article, aside, footer {
 	display: block;
 }
 body {
-	font-family: dosis, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 0;
 	padding: 0;
     min-width: 1024px;
@@ -23,7 +23,7 @@ img {
 }
 input, select {
 	vertical-align: middle;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	background: #FFFFFF;
 	outline: none;
@@ -95,10 +95,10 @@ input[type="submit"]:active, #random_link:active {
 #header-left {
 	float: left;
 	margin-left: 20px;
-	font: normal 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font: normal 12px 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #header-title {
-	font: normal 24px great-primer-small-caps, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font: normal 24px 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
 	padding: 5px 0 0 0;
 }
 
@@ -142,7 +142,7 @@ input[type="submit"]:active, #random_link:active {
 	padding: 30px 0 0 20px;
 }
 #sideLeft-bottom {
-	font: normal 12px dosis, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font: normal 12px 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
 	padding: 10px;
 	text-align: left;
 }
@@ -155,6 +155,7 @@ input[type="submit"]:active, #random_link:active {
 /* Sidebar Right
 -----------------------------------------------------------------------------*/
 #sideRight {
+    background: #F0F0F0 url(../images/patternbg.png);
 	float: left;
 	margin-right: 0;
 	width: 20%;
@@ -167,7 +168,7 @@ input[type="submit"]:active, #random_link:active {
 	height: 100px;
 }
 #sideRight-bottom {
-    font: normal 0.9em georgia, serif;
+    font: normal 1.1em 'Crimson', georgia, serif;
 	padding: 10px;
 	overflow: auto;
 }
@@ -180,8 +181,8 @@ input[type="submit"]:active, #random_link:active {
 	bottom: 0;
 	height: 50px;
 	width: 100%;
-	background: #fff;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #F0F0F0 url(../images/patternbg.png);
+	font-family: 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	color: #888;
 	text-align: right;
@@ -192,12 +193,12 @@ input[type="submit"]:active, #random_link:active {
 	margin-left: 10px;
 	text-align: left;
 	width: 25%;
-	font: normal 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font: normal 14px 'Roboto Slab', "Helvetica Neue", Helvetica, Arial, sans-serif;
 	line-height: 50px;
 }
 
 .popup {
-    font: normal 0.8em dosis, Helvetica, Arial, Verdana, sans-serif;
+    font: normal 0.8em 'Roboto Slab', Helvetica, Arial, Verdana, sans-serif;
     border: 2px solid #6D7F8B;
 	color: #000000;
 	width: 275px;
